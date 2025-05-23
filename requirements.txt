@@ -1,0 +1,17 @@
+anthropic
+filelock
+langdetect
+numpy
+nvgpu
+openai
+opencv-python-headless
+pdf2image
+pillow
+pytesseract
+python-decouple
+ruff
+scikit-learn
+tiktoken
+transformers
+pyttsx3
+pydub

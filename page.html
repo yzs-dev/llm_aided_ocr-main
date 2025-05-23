@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR App</title>
+</head>
+
+<body>
+    <h2>Upload File for OCR Processing</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Process</button>
+
+    <h3>Extracted Text</h3>
+    <pre id="extractedText"></pre>
+
+    <h3>Formatted Text</h3>
+    <pre id="formattedText"></pre>
+
+    <h3>Generated Audio</h3>
+    <audio controls id="audioPlayer"></audio>
+
+    <script>
+        async function uploadFile() {
+            let fileInput = document.getElementById('fileInput');
+            if (!fileInput.files.length) {
+                alert("Please select a file.");
+                return;
+            }
+            let formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("format_as_markdown", false);
+            formData.append("suppress_headers", false);
+
+            let response = await fetch("http://127.0.0.1:8000/process", {
+                method: "POST",
+                body: formData
+            });
+            let result = await response.json();
+            document.getElementById("extractedText").textContent = result.extracted_text;
+            document.getElementById("formattedText").textContent = result.formatted_text;
+            document.getElementById("audioPlayer").src = result.audio_file;
+        }
+    </script>
+</body>
+
+</html>
